@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
 import { Outlet } from 'react-router-dom';
 import Header from './components/common/Header';
+import Wrapper from './components/common/Wrapper';
 
 function App() {
   return (
-    <div>
+    <Wrapper>
       <Header />
       <Outlet />
-    </div>
+    </Wrapper>
   );
 }
 

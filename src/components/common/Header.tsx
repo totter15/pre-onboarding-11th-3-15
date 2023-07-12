@@ -1,10 +1,13 @@
 import { OWNER, REPO } from '../../apis/clinet';
+import * as S from './Header.style';
 
 function Header() {
   return (
-    <header>
-      {OWNER}/{REPO}
-    </header>
+    <S.Header>
+      <S.Title>
+        {OWNER} / {REPO}
+      </S.Title>
+    </S.Header>
   );
 }
 
