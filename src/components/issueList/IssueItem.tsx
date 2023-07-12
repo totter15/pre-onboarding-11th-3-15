@@ -1,22 +1,32 @@
-import { IssueListResponseData } from '../../apis/issue';
+import { Link } from 'react-router-dom';
+import { IssueItemType } from '../../interfaces/issueType';
+import * as S from './IssueItem.style';
 
 interface IssueItemProps {
-  item: IssueListResponseData[0];
+  item: IssueItemType;
 }
 
 function IssueItem({ item }: IssueItemProps) {
-  console.log(item);
-
   const { number, title, user, created_at, comments } = item ?? {};
+  const date = new Date(created_at);
 
   return (
-    <li>
-      <span>{number}</span>
-      <span>{title}</span>
-      <span>{user?.login}</span>
-      <span>{created_at}</span>
-      <span>{comments}</span>
-    </li>
+    <S.ItemBox>
+      <Link to={`/issue/${number}`}>
+        <section>
+          <div>
+            <span>#{number}</span>
+            <h2>{title}</h2>
+          </div>
+          <div>
+            <span>작성자 : {user?.login}</span>
+            <span>작성일 : {date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+          </div>
+        </section>
+
+        <span>코멘트 : {comments}</span>
+      </Link>
+    </S.ItemBox>
   );
 }
 

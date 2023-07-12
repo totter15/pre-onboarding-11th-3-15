@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { getList } from '../store/issueSlice';
 import IssueItem from '../components/issueList/IssueItem';
 import { IssueListType } from '../interfaces/issueType';
+import AdsItem from '../components/issueList/AdsItem';
+import { LoadingOutlined } from '@ant-design/icons';
+import * as S from './IssueList.style';
 
 function IssueList() {
-  const [index, setIndex] = useState(1);
+  const ref = useRef<HTMLDivElement>(null);
+
   const dispatch = useDispatch<any>();
   const issueList: IssueListType = useSelector((state: RootState) => {
     return state.issue.list;
@@ -14,24 +18,41 @@ function IssueList() {
   const isLoading = useSelector((state: RootState) => {
     return state.issue.loading;
   });
+  const index = useSelector((state: RootState) => {
+    return state.issue.index;
+  });
 
-  console.log(issueList);
+  function getIssueList() {
+    dispatch(getList(index));
+  }
+
+  const callback = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      if (entries[0].isIntersecting) {
+        !isLoading && getIssueList();
+      }
+    },
+    [index, isLoading],
+  );
 
   useEffect(() => {
-    dispatch(getList(index));
-  }, [dispatch, index]);
+    if (!ref.current) return;
 
-  console.log({ isLoading });
+    const observer = new IntersectionObserver(callback);
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [callback]);
 
   return (
-    <main>
-      <ul>
-        {issueList.map((item: any) =>
-          item?.number ? <IssueItem item={item} key={item.id} /> : <div key={item.id}>ads</div>,
+    <S.Container>
+      <S.List>
+        {issueList.map((item: any, i) =>
+          item?.number ? <IssueItem item={item} key={item.id} /> : <AdsItem item={item} key={item.id + i} />,
         )}
-      </ul>
-      <button onClick={() => setIndex((prev) => prev + 1)}>get</button>
-    </main>
+      </S.List>
+      <S.Loading>{isLoading && <LoadingOutlined spin style={{ fontSize: '3rem' }} />}</S.Loading>
+      <div ref={ref} />
+    </S.Container>
   );
 }
 

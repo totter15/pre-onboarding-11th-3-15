@@ -2,11 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { PER_PAGE, getIssueList } from '../apis/issue';
 import { IssueListType } from '../interfaces/issueType';
 
-interface State {
+export interface State {
   loading: boolean;
   list: IssueListType;
+  index: number;
 }
-const initialState: State = { list: [], loading: false };
+const initialState: State = { list: [], loading: false, index: 1 };
 
 export const getList = createAsyncThunk('issue/GET_ISSUE', async (index: number = 1) => {
   const data = await getIssueList(index);
@@ -34,6 +35,7 @@ const issueSlice = createSlice({
       adsIndex.forEach((_, index) => newAddedList.splice((index + 1) * 4 + index, 0, ads(index)));
 
       state.list = [...state.list, ...action.payload];
+      state.index = state.index + 1;
       state.loading = false;
     });
   },
