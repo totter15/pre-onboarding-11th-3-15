@@ -1,8 +1,8 @@
 import { useLoaderData } from 'react-router-dom';
-import { IssueResponseData } from '../apis/issue';
+import { IssueResponseDataType } from '../interfaces/issueType';
 
 function Issue() {
-  const data = useLoaderData() as IssueResponseData;
+  const data = useLoaderData() as IssueResponseDataType;
   const { number, title, user, created_at, body } = data ?? {};
   console.log(data);
 

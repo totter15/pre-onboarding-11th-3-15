@@ -1,7 +1,8 @@
 import IssueList from '../pages/IssueList';
 import Issue from '../pages/Issue';
 import { Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
-import { IssueResponseData, getIssue } from '../apis/issue';
+import { getIssue } from '../apis/issue';
+import { IssueResponseDataType } from '../interfaces/issueType';
 import App from '../App';
 
 const router = createBrowserRouter(
@@ -13,7 +14,7 @@ const router = createBrowserRouter(
         index
         path="issue/:issueNumber"
         element={<Issue />}
-        loader={async ({ params }: any): Promise<IssueResponseData> => {
+        loader={async ({ params }: any): Promise<IssueResponseDataType> => {
           return await getIssue(params.issueNumber * 1);
         }}
         errorElement={<div>issue error</div>}
