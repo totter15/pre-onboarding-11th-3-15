@@ -4,10 +4,12 @@ import { Route, createBrowserRouter, createRoutesFromElements } from 'react-rout
 import { getIssue } from '../apis/issue';
 import { IssueResponseDataType } from '../interfaces/issueType';
 import App from '../App';
+import NotFound from '../pages/NotFount';
+import NotFoundIssue from '../pages/NotFoundIssue';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />} errorElement={<div>error</div>}>
+    <Route path="/" element={<App />} errorElement={<NotFound />}>
       <Route index element={<IssueList />} />
       <Route path="issue" element={<IssueList />} />
       <Route
@@ -17,7 +19,7 @@ const router = createBrowserRouter(
         loader={async ({ params }: any): Promise<IssueResponseDataType> => {
           return await getIssue(params.issueNumber * 1);
         }}
-        errorElement={<div>issue error</div>}
+        errorElement={<NotFoundIssue />}
       />
     </Route>,
   ),
