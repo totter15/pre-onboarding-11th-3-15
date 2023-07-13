@@ -3,10 +3,17 @@ import { IssueResponseDataType } from '../interfaces/issueType';
 import IssueItem from '../components/issueList/IssueItem';
 import MarkdownRenderer from '../components/common/MarkdownRenderer';
 import * as S from './Issue.style';
+import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function Issue() {
   const data = useLoaderData() as IssueResponseDataType;
   const { user, body } = data ?? {};
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <S.IssuePage>
