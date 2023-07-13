@@ -1,20 +1,20 @@
 import { useLoaderData } from 'react-router-dom';
 import { IssueResponseDataType } from '../interfaces/issueType';
+import IssueItem from '../components/issueList/IssueItem';
+import MarkdownRenderer from '../components/common/MarkdownRenderer';
 
 function Issue() {
   const data = useLoaderData() as IssueResponseDataType;
-  const { number, title, user, created_at, body } = data ?? {};
-  console.log(data);
+  const { user, body } = data ?? {};
 
   return (
-    <div>
-      <section></section>
-      <span>{number}</span>
-      <span>{title}</span>
-      <span>{user?.login}</span>
-      <span>{created_at}</span>
-      <span>{body}</span>
-    </div>
+    <main>
+      <section>
+        <img src={user?.avatar_url} alt="avatar" />
+        <IssueItem item={data} />
+      </section>
+      <MarkdownRenderer>{body}</MarkdownRenderer>
+    </main>
   );
 }
 
