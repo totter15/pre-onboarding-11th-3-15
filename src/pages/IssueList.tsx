@@ -1,30 +1,13 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { getList } from '../store/issueSlice';
+import { useCallback } from 'react';
 import IssueItem from '../components/issueList/IssueItem';
-import { IssueListType } from '../interfaces/issueType';
 import AdsItem from '../components/issueList/AdsItem';
 import { LoadingOutlined } from '@ant-design/icons';
 import * as S from './IssueList.style';
+import useIntersect from '../hooks/useIntersect';
+import useIssue from '../hooks/useIssue';
 
 function IssueList() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const dispatch = useDispatch<any>();
-  const issueList: IssueListType = useSelector((state: RootState) => {
-    return state.issue.list;
-  });
-  const isLoading = useSelector((state: RootState) => {
-    return state.issue.loading;
-  });
-  const index = useSelector((state: RootState) => {
-    return state.issue.index;
-  });
-
-  function getIssueList() {
-    dispatch(getList(index));
-  }
+  const { issueList, isLoading, getIssueList } = useIssue();
 
   const callback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -32,16 +15,10 @@ function IssueList() {
         !isLoading && getIssueList();
       }
     },
-    [index, isLoading],
+    [isLoading, getIssueList],
   );
 
-  useEffect(() => {
-    if (!ref.current) return;
-
-    const observer = new IntersectionObserver(callback);
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [callback]);
+  const ref = useIntersect(callback);
 
   return (
     <S.Container>
