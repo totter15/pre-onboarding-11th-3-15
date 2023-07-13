@@ -13,18 +13,16 @@ function IssueItem({ item }: IssueItemProps) {
   return (
     <S.ItemBox>
       <Link to={`/issue/${number}`}>
-        <section>
-          <div>
-            <span>#{number}</span>
-            <h2>{title}</h2>
-          </div>
-          <div>
-            <span>작성자 : {user?.login}</span>
-            <span>작성일 : {date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-          </div>
-        </section>
+        <S.TitleBox>
+          <span>#{number}</span>
+          <h2>{title}</h2>
+        </S.TitleBox>
+        <S.SubBox>
+          <span>작성자 : {user?.login}</span>
+          <span>작성일 : {date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        </S.SubBox>
 
-        <span>코멘트 : {comments}</span>
+        <S.CommentBox>코멘트 : {comments}</S.CommentBox>
       </Link>
     </S.ItemBox>
   );

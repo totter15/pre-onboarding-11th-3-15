@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Markdown = styled.div`
-  line-height: 170%;
+  line-height: 160%;
   h1 {
     font-size: 1.8rem;
     font-weight: 700;
@@ -9,7 +9,8 @@ export const Markdown = styled.div`
     border-bottom: 1px solid gray;
     line-height: 120%;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    line-height: 140%;
   }
   h2 {
     font-size: 1.5rem;
@@ -18,6 +19,7 @@ export const Markdown = styled.div`
     border-bottom: 1px solid gray;
     margin-top: 20px;
     margin-bottom: 10px;
+    line-height: 140%;
   }
   h3 {
     font-size: 1.2rem;

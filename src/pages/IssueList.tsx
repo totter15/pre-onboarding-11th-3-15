@@ -46,9 +46,9 @@ function IssueList() {
   return (
     <S.Container>
       <S.List>
-        {issueList.map((item: any, i) =>
-          item?.number ? <IssueItem item={item} key={item.id} /> : <AdsItem item={item} key={item.id + i} />,
-        )}
+        {issueList.map((item: any, i) => (
+          <li>{item?.number ? <IssueItem item={item} key={item.id} /> : <AdsItem item={item} key={item.id + i} />}</li>
+        ))}
       </S.List>
       <S.Loading>{isLoading && <LoadingOutlined spin style={{ fontSize: '3rem' }} />}</S.Loading>
       <div ref={ref} />
