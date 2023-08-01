@@ -1,22 +1,35 @@
-## 폴더 구조
+# 프로젝트 소개
 
-- apis/ api 관련 파일 폴더
-- compoenets/ 공통, 페이지 컴포넌트 파일 폴더
-  - common/
-  - (pageName)/
-- pages/ 페이지 파일 폴더
-- routers/ 라우터 정의 파일 폴더
-- store/ redux관련 파일 폴더
+[원티드 프리온보딩 인틴십] 3주차 과제입니다.
 
-## 배포 링크
+GitHub REST API를 이용해 facebook / react의 레퍼지토리에서 이슈리스트를 가져오고 무한 스크롤 기능으로 구현한 웹사이트입니다. 리스트의 5번째에는 광고를 넣어 관리해주었습니다.
 
-https://pre-onboarding-11th-3-15.vercel.app/
-
-## issue를 불러올떄 이용한 repository
+**issue를 불러올떄 이용한 repository**
 
 [facebook / react](https://github.com/facebook/react/issues)
 
-## Router
+**배포 링크**
+
+https://pre-onboarding-11th-3-15.vercel.app/
+
+## 폴더 구조
+
+<pre>
+.
+├── apis            
+├── components      
+│   ├── common
+│   └── issueList
+├── hooks
+├── interfaces
+├── pages
+├── routers
+└── store
+</pre>
+
+## 기능 구현
+
+### Router
 
 ```js
 //App.tsx
@@ -46,7 +59,7 @@ root가 되는 App페이지에 `Outlet`과 `Header`를 이용해 공통 헤더�
 
 issue 가져오기시에 react-router에 있는 `loader`를 이용해 router가 rendering되기 전에 data를 가져오고 이때 오류 발생시 `errorElement`의 컴포넌트가 랜더링 되게 했습니다.
 
-## Redux Toolkit
+### Redux Toolkit
 
 ```js
 const issueSlice = createSlice({
@@ -75,7 +88,7 @@ const issueSlice = createSlice({
 
 redux toolkit의 `createAsyncThunk`를 이용하여 api 데이터를 불러오고 불러온 데이터에 광고를 삽입하여 state에 추가해주었습니다.
 
-## Infinite scroll
+### Infinite scroll
 
 ```js
   const callback = useCallback(
